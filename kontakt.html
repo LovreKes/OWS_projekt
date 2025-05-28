@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontakt – Restoran Kešina</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.2/imask.min.js"></script>
+</head>
+<body class="kontakt">
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo logo-gold">Restoran Kešina</div>
+    <div class="burger" id="burger">&#9776;</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Početna</a></li>
+      <li><a href="jelovnik.html">Jelovnik</a></li>
+      <li><a href="onama.html">O nama</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+  </div>
+
+  <!-- Kontakt Sekcija -->
+  <section class="contact-section">
+    <h2 class="section-heading">Kontaktirajte nas</h2>
+
+    <div class="contact-info">
+      <p><strong>Adresa:</strong> Kešina Ulica 12, 21000 Split</p>
+      <p><strong>Telefon:</strong> +385 21 123 456</p>
+      <p><strong>Mobitel:</strong> +385 91 654 3210</p>
+      <p><strong>E-mail:</strong> <a href="mailto:info@kesina.hr">info@kesina.hr</a></p>
+    </div>
+
+    <h2 class="section-heading">Rezervacija stola</h2>
+
+    <form class="reservation-form" id="reservation-form">
+      <div class="form-row">
+        <input type="text" id="ime" placeholder="Ime" required>
+        <input type="text" id="prezime" placeholder="Prezime" required>
+      </div>
+      <div class="form-row">
+        <input type="email" id="email" placeholder="E-mail" required>
+        <input type="tel" id="telefon" placeholder="+385 91 123 4567" required>
+      </div>
+      <div class="form-row">
+        <input type="number" id="brojOsoba" placeholder="Broj osoba (max 20)" required min="1" max="20">
+        <input type="date" id="datum" required>
+        <input type="time" id="vrijeme" required>
+      </div>
+      <textarea id="napomena" placeholder="Posebne napomene..."></textarea>
+      <button type="submit" class="submit-button">Pošalji upit</button>
+      <p id="successMessage" class="success-message" style="display:none;">✅ Uspješno ste rezervirali!</p>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Restoran Kešina. Sva prava pridržana.</p>
+  </footer>
+
+  <!-- Skripte -->
+  <script>
+    const burger = document.getElementById('burger');
+    const navLinks = document.querySelector('.nav-links');
+    if (burger) {
+      burger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    }
+
+    const telefonInput = document.getElementById('telefon');
+    const telefonMask = IMask(telefonInput, {
+      mask: '+{385} 00 000 0000',
+      lazy: false
+    });
+
+    document.getElementById("reservation-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const ime = document.getElementById("ime").value.trim();
+      const prezime = document.getElementById("prezime").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const telefon = document.getElementById("telefon").value.trim();
+      const brojOsoba = document.getElementById("brojOsoba").value;
+      const datum = document.getElementById("datum").value;
+      const vrijeme = document.getElementById("vrijeme").value;
+      const napomena = document.getElementById("napomena").value.trim();
+
+      const danas = new Date();
+      const odabraniDatum = new Date(datum);
+
+      if (odabraniDatum.setHours(0,0,0,0) < danas.setHours(0,0,0,0)) {
+        alert("Molimo odaberite datum koji nije u prošlosti.");
+        return false;
+      }
+
+      if (parseInt(brojOsoba) > 20) {
+        alert("Maksimalan broj osoba za rezervaciju je 20.");
+        return false;
+      }
+
+      if (vrijeme < "11:00" || vrijeme > "21:00") {
+        alert("Rezervacije su moguće samo između 11:00 i 21:00.");
+        return false;
+      }
+
+      const samoBrojevi = telefon.replace(/\D/g, '');
+      if (samoBrojevi.length < 11 || samoBrojevi.length > 15) {
+        alert("Molimo unesite ispravan broj mobitela.");
+        return false;
+      }
+
+      const novaRezervacija = {
+        ime,
+        prezime,
+        email,
+        telefon,
+        brojOsoba,
+        datum,
+        vrijeme,
+        napomena
+      };
+
+      const rezervacije = JSON.parse(localStorage.getItem("rezervacije")) || [];
+      rezervacije.push(novaRezervacija);
+      localStorage.setItem("rezervacije", JSON.stringify(rezervacije));
+
+      document.getElementById("successMessage").style.display = "block";
+      this.reset();
+      telefonMask.updateValue();
+    });
+  </script>
+</body>
+</html>

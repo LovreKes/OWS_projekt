@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restoran Kešina</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Navbar (učitava se izvanjsko) -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="welcome-side left">Welcome</div>
+    <div class="welcome-side right">Welcome</div>
+  </section>
+
+  <!-- Današnja ponuda -->
+  <section class="danasnja-ponuda">
+    <div class="title-container">
+      <h2>Dnevna ponuda</h2>
+      <span class="daily-badge">Svježe & Domaće</span>
+    </div>
+    <p class="subtitle">Isprobajte naše specijalitete za današnji dan!</p>
+
+    <div class="menu-items">
+      <div class="menu-item special">
+        <div class="image-wrapper">
+          <img src="images/losos.png" alt="Losos na žaru" />
+          <div class="price-tag">€12.99</div>
+        </div>
+        <h3>Losos na žaru</h3>
+        <p>Sočni filet lososa na žaru, poslužen s povrćem i limunom.</p>
+      </div>
+
+      <div class="menu-item special">
+        <div class="image-wrapper">
+          <img src="images/piletina.png" alt="Piletina s povrćem" />
+          <div class="price-tag">€9.50</div>
+        </div>
+        <h3>Piletina s povrćem</h3>
+        <p>Pečena piletina s mješavinom sezonskog povrća i začinima.</p>
+      </div>
+
+      <div class="menu-item special">
+        <div class="image-wrapper">
+          <img src="images/stejk.png" alt="Stejk s umakom" />
+          <div class="price-tag">€14.20</div>
+        </div>
+        <h3>Stejk s umakom</h3>
+        <p>Ribeye stejk s domaćim umakom i limunom za svježinu.</p>
+      </div>
+
+      <div class="menu-item special">
+        <div class="image-wrapper">
+          <img src="images/tjestenina.png" alt="Tjestenina Napoli" />
+          <div class="price-tag">€8.90</div>
+        </div>
+        <h3>Tjestenina Napoli</h3>
+        <p>Fettuccine s bogatim umakom od rajčice i svježe naribanim sirom.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Restoran Kešina. Sva prava pridržana.</p>
+  </footer>
+
+  <!-- Navbar loader i burger funkcionalnost -->
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar-placeholder").innerHTML = data;
+
+        // Burger meni nakon učitavanja
+        const burger = document.getElementById('burger');
+        const navLinks = document.querySelector('.nav-links');
+        if (burger) {
+          burger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+          });
+        }
+      });
+  </script>
+</body>
+</html>

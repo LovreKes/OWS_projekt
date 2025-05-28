@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jelovnik – Restoran Kešina</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Navbar placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <div class="menu-container">
+    <h1>Jelovnik</h1>
+
+    <!-- Predjela -->
+    <h2>Predjela</h2>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <h3>Bruskete s rajčicom i bosiljkom</h3>
+        <p>Sočni bruskete s rajčicom, bosiljkom i maslinovim uljem.</p>
+        <span>€4.50</span>
+      </div>
+      <div class="menu-card">
+        <h3>Juha od bundeve s vrhnjem</h3>
+        <p>Topla juha od bundeve, s kremastim vrhnjem.</p>
+        <span>€4.00</span>
+      </div>
+      <div class="menu-card">
+        <h3>Carpaccio od tune</h3>
+        <p>Fini carpaccio s tunom, maslinovim uljem i začinima.</p>
+        <span>€6.50</span>
+      </div>
+      <div class="menu-card">
+        <h3>Hladna plata s pršutom i sirom</h3>
+        <p>Hladna plata s pršutom, raznim sirevima i sušenim voćem.</p>
+        <span>€5.80</span>
+      </div>
+    </div>
+
+    <!-- Glavna jela -->
+    <h2>Glavna jela</h2>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <h3>Ribeye stejk s umakom od papra</h3>
+        <p>Sočan ribeye stejk sa svježim umakom od papra.</p>
+        <span>€15.90</span>
+      </div>
+      <div class="menu-card">
+        <h3>Grilani losos s limunom</h3>
+        <p>Svježi losos sa limunom, maslinovim uljem i povrćem.</p>
+        <span>€13.20</span>
+      </div>
+      <div class="menu-card">
+        <h3>Piletina s curryjem i rižom</h3>
+        <p>Grilana piletina u curry umaku s kuhanom rižom.</p>
+        <span>€10.50</span>
+      </div>
+      <div class="menu-card">
+        <h3>Tjestenina Carbonara</h3>
+        <p>Kremasta tjestenina s pancetom, jajima i parmezanom.</p>
+        <span>€9.80</span>
+      </div>
+      <div class="menu-card">
+        <h3>Punjena paprika u umaku od rajčice</h3>
+        <p>Punjena paprika sa svježim povrćem i umakom od rajčice.</p>
+        <span>€9.20</span>
+      </div>
+      <div class="menu-card">
+        <h3>Vegetarijanska lazanja</h3>
+        <p>Lasanja punjena povrćem, sirom i bogatim umakom.</p>
+        <span>€8.90</span>
+      </div>
+      <div class="menu-card">
+        <h3>Pljeskavica s krumpirićima</h3>
+        <p>Tradicionalna pljeskavica, poslužena s hrskavim krumpirićima.</p>
+        <span>€9.00</span>
+      </div>
+      <div class="menu-card">
+        <h3>Janjetina ispod peke</h3>
+        <p>Sočna janjetina pečena ispod peke s povrćem.</p>
+        <span>€14.50</span>
+      </div>
+      <div class="menu-card">
+        <h3>File oslića s blitvom</h3>
+        <p>Pečeni oslić sa svježom blitvom i limunom.</p>
+        <span>€10.00</span>
+      </div>
+      <div class="menu-card">
+        <h3>Zapečeni njoki s gljivama</h3>
+        <p>Zapečeni njoki s gljivama, parmezanom i kremastim umakom.</p>
+        <span>€8.70</span>
+      </div>
+    </div>
+
+    <!-- Deserti -->
+    <h2>Deserti</h2>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <h3>Tiramisu</h3>
+        <p>Klasični talijanski desert s kavu i mascarponeom.</p>
+        <span>€4.50</span>
+      </div>
+      <div class="menu-card">
+        <h3>Palačinke s Nutellom</h3>
+        <p>Slatke palačinke punjene Nutellom i preliveno čokoladom.</p>
+        <span>€4.00</span>
+      </div>
+      <div class="menu-card">
+        <h3>Cheesecake s malinama</h3>
+        <p>Kremasti cheesecake s malinama i podlogom od biskvita.</p>
+        <span>€4.80</span>
+      </div>
+      <div class="menu-card">
+        <h3>Sladoled s voćem</h3>
+        <p>Svježi voćni sladoled, savršen za vruće ljetne dane.</p>
+        <span>€3.90</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Restoran Kešina. Sva prava pridržana.</p>
+  </footer>
+
+  <!-- Učitavanje navbar i skripta za burger -->
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar-placeholder").innerHTML = data;
+
+        // Dodajemo burger skriptu kad se navbar učita
+        const burger = document.getElementById('burger');
+        const navLinks = document.querySelector('.nav-links');
+        if (burger) {
+          burger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+          });
+        }
+      });
+  </script>
+</body>
+</html>
