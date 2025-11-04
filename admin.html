@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Restoran Kešina</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato&display=swap" rel="stylesheet" />
+  <style>
+    body.admin {
+      background-color: #fdfdf9;
+      color: #222;
+      font-family: 'Lato', sans-serif;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    table th, table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .delete-btn, .clear-btn {
+      background-color: #b22222;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .clear-btn {
+      margin-top: 1rem;
+    }
+
+    .delete-btn:hover,
+    .clear-btn:hover {
+      background-color: #8b0000;
+    }
+
+    .no-data {
+      text-align: center;
+      color: #888;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body class="admin">
+  <h1>Rezervacije – Admin</h1>
+
+  <div id="rezervacije-container">
+    <table id="rezervacije-table" style="display: none;">
+      <thead>
+        <tr>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>Email</th>
+          <th>Telefon</th>
+          <th>Broj osoba</th>
+          <th>Datum</th>
+          <th>Vrijeme</th>
+          <th>Napomena</th>
+          <th>Akcija</th>
+        </tr>
+      </thead>
+      <tbody id="rezervacije-body"></tbody>
+    </table>
+    <p id="no-data" class="no-data">Nema rezervacija za prikaz.</p>
+  </div>
+
+  <button class="clear-btn" onclick="obrisiSveRezervacije()">Obriši sve rezervacije</button>
+
+  <script>
+    function prikaziRezervacije() {
+      const rezervacije = JSON.parse(localStorage.getItem("rezervacije")) || [];
+      const tbody = document.getElementById("rezervacije-body");
+      const table = document.getElementById("rezervacije-table");
+      const noData = document.getElementById("no-data");
+
+      tbody.innerHTML = "";
+
+      if (rezervacije.length === 0) {
+        table.style.display = "none";
+        noData.style.display = "block";
+        return;
+      }
+
+      noData.style.display = "none";
+      table.style.display = "table";
+
+      rezervacije.forEach((rez, index) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${rez.ime}</td>
+          <td>${rez.prezime}</td>
+          <td>${rez.email}</td>
+          <td>${rez.telefon}</td>
+          <td>${rez.brojOsoba}</td>
+          <td>${rez.datum}</td>
+          <td>${rez.vrijeme}</td>
+          <td>${rez.napomena || ""}</td>
+          <td><button class="delete-btn" onclick="obrisiRezervaciju(${index})">Obriši</button></td>
+        `;
+
+        tbody.appendChild(row);
+      });
+    }
+
+    function obrisiRezervaciju(index) {
+      const rezervacije = JSON.parse(localStorage.getItem("rezervacije")) || [];
+      rezervacije.splice(index, 1);
+      localStorage.setItem("rezervacije", JSON.stringify(rezervacije));
+      prikaziRezervacije();
+    }
+
+    function obrisiSveRezervacije() {
+      if (confirm("Jesi siguran da želiš obrisati sve rezervacije?")) {
+        localStorage.removeItem("rezervacije");
+        prikaziRezervacije();
+      }
+    }
+
+    // Učitaj rezervacije pri učitavanju stranice
+    window.onload = prikaziRezervacije;
+  </script>
+</body>
+</html>
